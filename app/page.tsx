@@ -57,7 +57,7 @@ export default function WeddingPortfolioHome() {
 
       {/* --- ELEMENTO AUDIO (Sostituisci il link con la tua traccia) --- */}
       <audio ref={audioRef} loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+        <source src="canzone2.mp3" type="audio/mpeg" />
       </audio>
 
       {/* --- TASTO VOLUME FLOATING --- */}
