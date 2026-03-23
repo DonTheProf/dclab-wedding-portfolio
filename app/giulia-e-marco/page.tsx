@@ -1,55 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import RSVP from "./components/RSVP";
 
 export default function GiuliaMarcoPortfolio() {
   const [isOpen, setIsOpen] = useState(false);
-  const [typedText, setTypedText] = useState("");
   
-  // Aggiunto stato mancante per evitare errori
-  const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   const fullText = "Siamo felici di invitarvi a celebrare il nostro amore in una cornice rustica e romantica, circondati dalla natura e dalle persone che amiamo.";
-
-  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" ---
-  useEffect(() => {
-    if (!isOpen) {
-      setTypedText(""); 
-      return;
-    }
-
-    let isCancelled = false;
-    let i = 0;
-    setTypedText(""); 
-
-    const type = () => {
-      if (isCancelled) return;
-
-      if (i <= fullText.length) {
-        setTypedText(fullText.slice(0, i));
-        i++;
-        setTimeout(type, 50); 
-      }
-    };
-
-    const startTimeout = setTimeout(type, 300);
-
-    return () => {
-      isCancelled = true;
-      clearTimeout(startTimeout);
-    };
-  }, [isOpen]); 
-
-  // Funzione per caricamento foto (se decidi di aggiungerla graficamente dopo)
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const newPhotos = Array.from(files).map(file => URL.createObjectURL(file));
-      setUploadedPhotos(prev => [...newPhotos, ...prev]);
-    }
-  };
 
   const bohoBackgroundStyle = {
     backgroundColor: "#F4EBD0",
@@ -101,9 +58,9 @@ export default function GiuliaMarcoPortfolio() {
       </div>
 
       {/* --- CONTENUTO --- */}
-      <div className={`transition-all duration-1000 delay-500 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+      <div className={`transition-all duration-[1500ms] delay-500 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         
-        {/* Intro */}
+        {/* Intro con nuova animazione Reveal */}
         <section className="min-h-[65vh] flex flex-col items-center justify-center text-center px-4 pt-24 pb-24 relative">
           <h2 className="text-7xl md:text-9xl font-[family-name:var(--font-script)] text-[#5c4a40] relative z-10">Giulia & Marco</h2>
           
@@ -111,23 +68,22 @@ export default function GiuliaMarcoPortfolio() {
              <img src="/boho-divider.png" alt="Decorazione" className="w-full h-auto drop-shadow-sm opacity-90" />
           </div>
 
-          {/* Testo animato - SISTEMATO PER EVITARE SALTI DI LAYOUT */}
-          <div className="relative max-w-lg mx-auto">
-            {/* Ghost Text: serve a "tenere occupato" lo spazio per non far saltare la pagina */}
-            <p className="font-[family-name:var(--font-cormorant)] text-transparent leading-relaxed text-2xl md:text-3xl font-light italic select-none pointer-events-none">
+          <div className="max-w-2xl mx-auto overflow-hidden">
+            {/* NUOVA ANIMAZIONE: Dissolvenza e risalita lenta */}
+            <p 
+              className={`font-[family-name:var(--font-cormorant)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light italic transition-all duration-[2000ms] delay-[800ms] ease-out ${
+                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+              }`}
+            >
               {fullText}
             </p>
-            {/* Testo reale */}
-            <p className="absolute top-0 left-0 w-full h-full font-[family-name:var(--font-cormorant)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light italic">
-              {typedText}
-              <span className="animate-pulse ml-1 opacity-70">|</span>
-            </p>
+            {/* Sottolineatura decorativa che appare dopo il testo */}
+            <div className={`h-[1px] bg-[#C48061]/30 mx-auto mt-8 transition-all duration-[2000ms] delay-[1500ms] ${isOpen ? "w-24" : "w-0"}`}></div>
           </div>
         </section>
 
         <div className="space-y-28 pb-20">
-          
-          {/* Cerimonia */}
+          {/* --- CERIMONIA --- */}
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
               <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">La Cerimonia</p>
@@ -147,7 +103,7 @@ export default function GiuliaMarcoPortfolio() {
             </div>
           </section>
 
-          {/* Ricevimento */}
+          {/* --- RICEVIMENTO --- */}
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
               <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">Il Ricevimento</p>
@@ -160,7 +116,6 @@ export default function GiuliaMarcoPortfolio() {
           </section>
 
           <RSVP />
-
         </div>
 
         <footer className="pb-12 text-center border-t border-[#C48061]/20 pt-12">
