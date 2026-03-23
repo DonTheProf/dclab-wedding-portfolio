@@ -19,16 +19,16 @@ export default function SofiaAlessandroPortfolio() {
 
   const fullText = "Il piacere di invitarvi al nostro giorno più bello. Un'esperienza di eleganza, amore e condivisione.";
 
-  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" ---
+  // --- LOGICA MACMACHINE DA SCRIVERE "BLINDATA" ---
   useEffect(() => {
     if (!isOpen) {
-      setTypedText(""); // Reset se chiuso
+      setTypedText(""); 
       return;
     }
 
-    let isCancelled = false; // Flag per evitare sfarfallio e conflitti
+    let isCancelled = false; 
     let i = 0;
-    setTypedText(""); // Reset immediato
+    setTypedText(""); // Reset iniziale immediato
 
     const type = () => {
       if (isCancelled) return;
@@ -36,18 +36,18 @@ export default function SofiaAlessandroPortfolio() {
       if (i <= fullText.length) {
         setTypedText(fullText.slice(0, i));
         i++;
-        setTimeout(type, 50); // Velocità 50ms per fluidità lussuosa
+        setTimeout(type, 50); // Velocità 50ms per un effetto fluido e di classe
       }
     };
 
-    // Ritardo di 300ms: aspetta che la copertina abbia iniziato a scorrere
+    // Ritardo di 300ms: attende che l'animazione della copertina sia partita
     const startTimeout = setTimeout(type, 300);
 
     return () => {
-      isCancelled = true; // Ferma il ciclo se il componente smonta o cambia stato
+      isCancelled = true; 
       clearTimeout(startTimeout);
     };
-  }, [isOpen]); // Eseguito solo all'apertura
+  }, [isOpen]); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,7 +112,7 @@ export default function SofiaAlessandroPortfolio() {
             <h2 className="font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12 text-gray-400">L'essenza dell'Amore</h2>
             
             <div className="relative">
-               {/* Ghost Text per stabilità layout: mantiene l'altezza corretta della sezione */}
+               {/* Ghost Text: mantiene l'altezza per evitare sbalzi di layout */}
                <p className="font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-transparent select-none">
                 {fullText}
                </p>
@@ -127,7 +127,6 @@ export default function SofiaAlessandroPortfolio() {
           <div className="w-[1px] h-32 bg-black/20 mt-12"></div>
         </section>
 
-        {/* --- DETTAGLI --- */}
         <div className="max-w-5xl mx-auto px-6 space-y-64 pb-40">
           {/* Cerimonia */}
           <section className="grid md:grid-cols-2 gap-16 items-center">
@@ -138,7 +137,7 @@ export default function SofiaAlessandroPortfolio() {
               <p className="font-[family-name:var(--font-clean)] text-[10px] uppercase tracking-[0.6em] text-gray-400 font-bold">La Promessa</p>
               <h3 className="font-[family-name:var(--font-royal)] text-4xl md:text-5xl border-b border-black/5 pb-6">Basilica di Santa Maria</h3>
               <p className="font-[family-name:var(--font-clean)] text-sm leading-relaxed text-gray-500 italic font-light">Il rito religioso avrà inizio alle ore 11:30.</p>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="inline-block text-[10px] uppercase tracking-[0.4em] font-bold border-b border-black pb-2 mt-4 hover:opacity-50 transition-opacity">Visualizza Mappa</a>
+              <a href="https://www.google.it/maps" target="_blank" rel="noopener noreferrer" className="inline-block text-[10px] uppercase tracking-[0.4em] font-bold border-b border-black pb-2 mt-4 hover:opacity-50 transition-opacity">Visualizza Mappa</a>
             </div>
           </section>
 
@@ -148,7 +147,7 @@ export default function SofiaAlessandroPortfolio() {
               <p className="font-[family-name:var(--font-clean)] text-[10px] uppercase tracking-[0.6em] text-gray-400 font-bold">Il Galà</p>
               <h3 className="font-[family-name:var(--font-royal)] text-4xl md:text-5xl border-b border-black/5 pb-6">Villa del Borgo</h3>
               <p className="font-[family-name:var(--font-clean)] text-sm leading-relaxed text-gray-500 italic font-light">A seguire, i festeggiamenti proseguiranno nei giardini della villa.</p>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="inline-block text-[10px] uppercase tracking-[0.4em] font-bold border-b border-black pb-2 mt-4 hover:opacity-50 transition-opacity">La Location</a>
+              <a href="https://www.google.it/maps" target="_blank" rel="noopener noreferrer" className="inline-block text-[10px] uppercase tracking-[0.4em] font-bold border-b border-black pb-2 mt-4 hover:opacity-50 transition-opacity">La Location</a>
             </div>
             <div className="relative group">
               <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2048&auto=format&fit=crop" className="w-full grayscale hover:grayscale-0 transition-all duration-1000 aspect-[3/4] object-cover shadow-2xl" alt="Villa" />
