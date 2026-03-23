@@ -8,14 +8,26 @@ export default function GiuliaMarcoPortfolio() {
   const [typedText, setTypedText] = useState("");
   const fullText = "Siamo felici di invitarvi a celebrare il nostro amore in una cornice rustica e romantica, circondati dalla natura e dalle persone che amiamo.";
 
+  // LOGICA MACCHINA DA SCRIVERE OTTIMIZZATA
   useEffect(() => {
-    if (isOpen && typedText.length < fullText.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, typedText.length + 1));
-      }, 70); 
-      return () => clearTimeout(timeout);
+    if (!isOpen) {
+      setTypedText(""); // Reset se chiuso
+      return;
     }
-  }, [isOpen, typedText]);
+
+    let i = 0;
+    const interval = setInterval(() => {
+      // Usiamo il valore funzionale di setTypedText per evitare dipendenze esterne
+      setTypedText(fullText.slice(0, i + 1));
+      i++;
+
+      if (i >= fullText.length) {
+        clearInterval(interval);
+      }
+    }, 50); // Velocità leggermente aumentata per fluidità
+
+    return () => clearInterval(interval); // Pulizia fondamentale per evitare lo sfarfallio
+  }, [isOpen]); // Si attiva solo quando cambia lo stato di apertura
 
   const bohoBackgroundStyle = {
     backgroundColor: "#F4EBD0",
@@ -28,7 +40,7 @@ export default function GiuliaMarcoPortfolio() {
   return (
     <main style={bohoBackgroundStyle} className="min-h-screen relative overflow-x-hidden antialiased selection:bg-[#C48061]/20 text-gray-800">
       
-      {/* --- FONT STYLE BLOCK - AGGIORNATO CON BELLEZA --- */}
+      {/* --- FONT STYLE BLOCK --- */}
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Belleza&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Parisienne&family=Tenor+Sans&family=Water+Brush&display=swap');
         
@@ -77,6 +89,7 @@ export default function GiuliaMarcoPortfolio() {
              <img src="/boho-divider.png" alt="Decorazione" className="w-full h-auto drop-shadow-sm opacity-90" />
           </div>
 
+          {/* Testo animato con "Ghost Text" per mantenere l'altezza ed evitare sbalzi di layout */}
           <div className="relative max-w-lg mx-auto">
             <p className="font-[family-name:var(--font-cormorant)] text-transparent leading-relaxed text-2xl md:text-3xl font-light italic select-none pointer-events-none">
               {fullText}
@@ -93,11 +106,8 @@ export default function GiuliaMarcoPortfolio() {
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
               <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">La Cerimonia</p>
-              {/* BELLEZA APPLICATO QUI TRAMITE --font-heading */}
               <h3 className="text-5xl md:text-7xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Tenuta La Campana</h3>
-              
               <p className="text-[#8c7a6b] font-[family-name:var(--font-details)] uppercase tracking-widest text-[14px] mt-4 font-bold">Ore 16:30 • Rito Civile all'aperto</p>
-              
               <a 
                 href="https://maps.google.com" 
                 target="_blank" 
@@ -116,9 +126,7 @@ export default function GiuliaMarcoPortfolio() {
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
               <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">Il Ricevimento</p>
-              {/* BELLEZA APPLICATO QUI TRAMITE --font-heading */}
               <h3 className="text-5xl md:text-7xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Cena sotto gli ulivi</h3>
-              
               <p className="text-[#8c7a6b] font-[family-name:var(--font-details)] uppercase tracking-widest text-[14px] mt-4 font-bold">A seguire, nella stessa location</p>
             </div>
             <div className="mt-12 w-full max-w-4xl mx-auto px-4 md:px-8">

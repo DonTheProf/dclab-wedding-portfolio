@@ -19,21 +19,28 @@ export default function SofiaAlessandroPortfolio() {
 
   const fullText = "Il piacere di invitarvi al nostro giorno più bello. Un'esperienza di eleganza, amore e condivisione.";
 
+  // FIX: MACCHINA DA SCRIVERE SENZA SFARFALLIO
   useEffect(() => {
-    if (isOpen && typedText.length < fullText.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, typedText.length + 1));
-      }, 50); 
-      return () => clearTimeout(timeout);
+    if (!isOpen) {
+      setTypedText("");
+      return;
     }
-  }, [isOpen, typedText]);
+
+    let i = 0;
+    const interval = setInterval(() => {
+      setTypedText(fullText.slice(0, i + 1));
+      i++;
+      if (i >= fullText.length) clearInterval(interval);
+    }, 60);
+
+    return () => clearInterval(interval);
+  }, [isOpen]); // Si attiva solo quando si clicca su "Entra"
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (nome.trim() !== "") setInviato(true);
   };
 
-  // GESTIONE CARICAMENTO FOTO
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -57,13 +64,14 @@ export default function SofiaAlessandroPortfolio() {
         }
       `}} />
 
-      {/* --- COPERTINA (HERO) --- */}
+      {/* --- COPERTINA (HERO) - IMMAGINE MIGLIORATA (LUXURY MINIMAL) --- */}
       <div 
         className={`fixed inset-0 z-50 flex flex-col items-center justify-center p-8 transition-all duration-[1500ms] bg-white ${
           isOpen ? "translate-y-[-100%] opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
       >
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20"></div>
+        {/* Nuova immagine di sfondo: Architettura minimalista e pulita */}
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1510076857177-7470076d4098?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-30"></div>
         
         <div className="text-center relative z-10 border-x border-black/10 px-12 py-20">
           <p className="font-[family-name:var(--font-clean)] uppercase tracking-[0.8em] text-[10px] mb-8 font-light">Save the Date</p>
@@ -84,21 +92,22 @@ export default function SofiaAlessandroPortfolio() {
       {/* --- CONTENUTO PRINCIPALE --- */}
       <div className={`transition-all duration-1000 delay-500 ${isOpen ? "opacity-100" : "opacity-0"}`}>
         
-        {/* Intro con Scroll Line */}
+        {/* Intro con Scroll Line - FONT MACCHINA DA SCRIVERE MIGLIORATO (VOGUE STYLE) */}
         <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
           <div className="w-[1px] h-32 bg-black/20 mb-12"></div>
           
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <h2 className="font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12">L'essenza dell'Amore</h2>
-            <p className="font-[family-name:var(--font-clean)] text-lg md:text-xl font-light leading-loose tracking-wide text-gray-600 italic">
+            {/* Cambiato il font qui in Bodoni Moda per un effetto luxury */}
+            <p className="font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-gray-800 italic">
               {typedText}
+              <span className="animate-pulse ml-1">|</span>
             </p>
           </div>
           
           <div className="w-[1px] h-32 bg-black/20 mt-12"></div>
         </section>
 
-        {/* --- DETTAGLI --- */}
         <div className="max-w-5xl mx-auto px-6 space-y-64 pb-40">
           
           {/* Cerimonia */}
@@ -127,7 +136,7 @@ export default function SofiaAlessandroPortfolio() {
             </div>
           </section>
 
-          {/* --- NUOVA SEZIONE: LIVE GALLERY --- */}
+          {/* Live Gallery */}
           <section className="text-center space-y-16">
             <div className="space-y-4">
               <p className="font-[family-name:var(--font-clean)] text-[10px] uppercase tracking-[0.8em] text-gray-400 font-bold">Momenti Condivisi</p>
@@ -149,7 +158,6 @@ export default function SofiaAlessandroPortfolio() {
                 Carica un momento
               </button>
 
-              {/* Anteprima foto dinamica */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mt-24">
                 {uploadedPhotos.map((src, index) => (
                   <div key={index} className="aspect-square overflow-hidden bg-gray-100 animate-in fade-in slide-in-from-bottom-6 duration-[1000ms]">
@@ -160,7 +168,7 @@ export default function SofiaAlessandroPortfolio() {
             </div>
           </section>
 
-          {/* --- SEZIONE RSVP INTEGRATA --- */}
+          {/* RSVP */}
           <section className="pt-32 border-t border-black/10">
             {inviato ? (
               <div className="text-center py-20 animate-in fade-in zoom-in duration-1000">
@@ -218,7 +226,6 @@ export default function SofiaAlessandroPortfolio() {
 
         </div>
 
-        {/* Footer */}
         <footer className="py-24 text-center bg-white border-t border-black/5">
           <p className="font-[family-name:var(--font-royal)] text-2xl tracking-[0.4em] mb-4 font-bold">S & A</p>
           <div className="w-8 h-[1px] bg-black/20 mx-auto mb-8"></div>

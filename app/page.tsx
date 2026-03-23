@@ -3,25 +3,50 @@ import Link from "next/link";
 
 export default function WeddingPortfolioHome() {
   const demoList = [
-    { title: "Boho Chic", couple: "Giulia & Marco", path: "/giulia-e-marco", img: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070", style: "Caldo e Naturale" },
-    { title: "Minimal Luxury", couple: "Sofia & Alessandro", path: "/sofia-e-alessandro", img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069", style: "Elegante e Solenne" },
-    { title: "Mediterranean Summer", couple: "Chiara & Matteo", path: "/chiara-e-matteo", img: "https://images.unsplash.com/photo-1520933566085-8622003d03f1?q=80&w=2070", style: "Vibrante e Solare" }
+    { 
+      title: "Boho Chic", 
+      couple: "Giulia & Marco", 
+      path: "/giulia-e-marco", 
+      img: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070", 
+      style: "Caldo e Naturale" 
+    },
+    { 
+      title: "Minimal Luxury", 
+      couple: "Sofia & Alessandro", 
+      path: "/sofia-e-alessandro", 
+      img: "https://images.unsplash.com/photo-1510076857177-7470076d4098?q=80&w=2072", 
+      style: "Elegante e Solenne" 
+    },
+    { 
+      title: "Mediterranean Summer", 
+      couple: "Chiara & Matteo", 
+      path: "/chiara-e-matteo", 
+      // NUOVA IMMAGINE: Veduta mediterranea iconica
+      img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2000", 
+      style: "Vibrante e Solare" 
+    }
   ];
 
   return (
     <main className="min-h-screen bg-[#FAF9F6] text-[#1a1a1a] p-8 md:p-24">
       {/* Header Studio */}
       <header className="text-center mb-24 space-y-4">
-        <h1 className="text-5xl font-bold tracking-[0.2em] uppercase border-b-2 border-black inline-block pb-2">DC LAB</h1>
-        <p className="text-xs uppercase tracking-[0.5em] text-gray-500">Wedding Tech Studio</p>
+        <div className="inline-block border-b-2 border-black pb-2">
+          <h1 className="text-5xl font-bold tracking-[0.2em] uppercase">DC LAB</h1>
+        </div>
+        <p className="text-xs uppercase tracking-[0.5em] text-gray-500 font-medium">Wedding Tech Studio</p>
       </header>
 
       {/* Grid delle Demo */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
         {demoList.map((item) => (
           <Link href={item.path} key={item.path} className="group block space-y-6">
-            <div className="aspect-[3/4] overflow-hidden bg-gray-200 relative">
-              <img src={item.img} alt={item.couple} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
+            <div className="aspect-[3/4] overflow-hidden bg-gray-200 relative shadow-sm">
+              <img 
+                src={item.img} 
+                alt={item.couple} 
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" 
+              />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
             </div>
             <div className="space-y-2">
@@ -39,6 +64,9 @@ export default function WeddingPortfolioHome() {
         <p className="text-gray-500 text-sm leading-relaxed italic">
           Offriamo agli sposi soluzioni innovative: RSVP istantanei, Live Photo Gallery degli ospiti e integrazione QR Code su partecipazioni fisiche.
         </p>
+        <div className="pt-8">
+           <p className="text-[9px] uppercase tracking-[0.6em] text-gray-300 italic">DC Lab Luxury Tech Studio • 2026</p>
+        </div>
       </section>
     </main>
   );
