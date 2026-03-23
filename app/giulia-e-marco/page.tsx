@@ -1,14 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import RSVP from "./components/RSVP";
 
 export default function GiuliaMarcoPortfolio() {
   const [isOpen, setIsOpen] = useState(false);
   const [typedText, setTypedText] = useState("");
+  
+  // Aggiunto stato mancante per evitare errori
+  const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const fullText = "Siamo felici di invitarvi a celebrare il nostro amore in una cornice rustica e romantica, circondati dalla natura e dalle persone che amiamo.";
 
-  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" (STESSA DI CHIARA & MATTEO) ---
+  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" ---
   useEffect(() => {
     if (!isOpen) {
       setTypedText(""); 
@@ -17,7 +22,7 @@ export default function GiuliaMarcoPortfolio() {
 
     let isCancelled = false;
     let i = 0;
-    setTypedText(""); // Reset iniziale
+    setTypedText(""); 
 
     const type = () => {
       if (isCancelled) return;
@@ -25,11 +30,10 @@ export default function GiuliaMarcoPortfolio() {
       if (i <= fullText.length) {
         setTypedText(fullText.slice(0, i));
         i++;
-        setTimeout(type, 50); // Velocità 50ms per fluidità
+        setTimeout(type, 50); 
       }
     };
 
-    // Ritardo di 300ms: evita conflitti con l'animazione della copertina
     const startTimeout = setTimeout(type, 300);
 
     return () => {
@@ -37,6 +41,15 @@ export default function GiuliaMarcoPortfolio() {
       clearTimeout(startTimeout);
     };
   }, [isOpen]); 
+
+  // Funzione per caricamento foto (se decidi di aggiungerla graficamente dopo)
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const newPhotos = Array.from(files).map(file => URL.createObjectURL(file));
+      setUploadedPhotos(prev => [...newPhotos, ...prev]);
+    }
+  };
 
   const bohoBackgroundStyle = {
     backgroundColor: "#F4EBD0",
@@ -98,11 +111,13 @@ export default function GiuliaMarcoPortfolio() {
              <img src="/boho-divider.png" alt="Decorazione" className="w-full h-auto drop-shadow-sm opacity-90" />
           </div>
 
-          {/* Testo animato con "Ghost Text" per stabilità layout */}
+          {/* Testo animato - SISTEMATO PER EVITARE SALTI DI LAYOUT */}
           <div className="relative max-w-lg mx-auto">
+            {/* Ghost Text: serve a "tenere occupato" lo spazio per non far saltare la pagina */}
             <p className="font-[family-name:var(--font-cormorant)] text-transparent leading-relaxed text-2xl md:text-3xl font-light italic select-none pointer-events-none">
               {fullText}
             </p>
+            {/* Testo reale */}
             <p className="absolute top-0 left-0 w-full h-full font-[family-name:var(--font-cormorant)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light italic">
               {typedText}
               <span className="animate-pulse ml-1 opacity-70">|</span>
