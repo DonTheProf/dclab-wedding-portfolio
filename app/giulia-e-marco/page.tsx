@@ -60,7 +60,7 @@ export default function GiuliaMarcoPortfolio() {
       {/* --- CONTENUTO --- */}
       <div className={`transition-all duration-[1500ms] delay-500 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         
-        {/* Intro con nuova animazione Reveal */}
+        {/* Intro */}
         <section className="min-h-[65vh] flex flex-col items-center justify-center text-center px-4 pt-24 pb-24 relative">
           <h2 className="text-7xl md:text-9xl font-[family-name:var(--font-script)] text-[#5c4a40] relative z-10">Giulia & Marco</h2>
           
@@ -69,7 +69,6 @@ export default function GiuliaMarcoPortfolio() {
           </div>
 
           <div className="max-w-2xl mx-auto overflow-hidden">
-            {/* AGGIORNATO: Font Belleza (var(--font-heading)) e rimosso italic per coerenza con Belleza */}
             <p 
               className={`font-[family-name:var(--font-heading)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light uppercase tracking-wide transition-all duration-[2000ms] delay-[800ms] ease-out ${
                 isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -82,11 +81,14 @@ export default function GiuliaMarcoPortfolio() {
         </section>
 
         <div className="space-y-28 pb-20">
+          
           {/* --- CERIMONIA --- */}
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
-              <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">La Cerimonia</p>
-              <h3 className="text-5xl md:text-7xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Tenuta La Campana</h3>
+              {/* INGRANDITO: La Cerimonia */}
+              <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-6xl md:text-8xl mb-2">La Cerimonia</p>
+              {/* DIMINUITO: Tenuta La Campana */}
+              <h3 className="text-4xl md:text-5xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Tenuta La Campana</h3>
               <p className="text-[#8c7a6b] font-[family-name:var(--font-details)] uppercase tracking-widest text-[14px] mt-4 font-bold">Ore 16:30 • Rito Civile all'aperto</p>
               <a 
                 href="https://www.google.it/maps" 
@@ -105,8 +107,10 @@ export default function GiuliaMarcoPortfolio() {
           {/* --- RICEVIMENTO --- */}
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
-              <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">Il Ricevimento</p>
-              <h3 className="text-5xl md:text-7xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Cena sotto gli ulivi</h3>
+              {/* INGRANDITO: Il Ricevimento */}
+              <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-6xl md:text-8xl mb-2">Il Ricevimento</p>
+              {/* DIMINUITO: Cena sotto gli ulivi */}
+              <h3 className="text-4xl md:text-5xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Cena sotto gli ulivi</h3>
               <p className="text-[#8c7a6b] font-[family-name:var(--font-details)] uppercase tracking-widest text-[14px] mt-4 font-bold">A seguire, nella stessa location</p>
             </div>
             <div className="mt-12 w-full max-w-4xl mx-auto px-4 md:px-8">
