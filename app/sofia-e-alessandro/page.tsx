@@ -19,22 +19,35 @@ export default function SofiaAlessandroPortfolio() {
 
   const fullText = "Il piacere di invitarvi al nostro giorno più bello. Un'esperienza di eleganza, amore e condivisione.";
 
-  // FIX: MACCHINA DA SCRIVERE SENZA SFARFALLIO
+  // --- LOGICA MACCHINA DA SCRIVERE "ANTI-SFARFALLIO" ---
   useEffect(() => {
     if (!isOpen) {
       setTypedText("");
       return;
     }
 
+    let isCancelled = false;
     let i = 0;
-    const interval = setInterval(() => {
-      setTypedText(fullText.slice(0, i + 1));
-      i++;
-      if (i >= fullText.length) clearInterval(interval);
-    }, 60);
+    setTypedText(""); // Reset iniziale
 
-    return () => clearInterval(interval);
-  }, [isOpen]); // Si attiva solo quando si clicca su "Entra"
+    const type = () => {
+      if (isCancelled) return;
+
+      if (i <= fullText.length) {
+        setTypedText(fullText.slice(0, i));
+        i++;
+        setTimeout(type, 50); // Velocità 50ms per un effetto fluido
+      }
+    };
+
+    // Ritardo di 300ms per attendere che l'animazione della copertina sia a metà
+    const startTimeout = setTimeout(type, 300);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(startTimeout);
+    };
+  }, [isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,13 +77,12 @@ export default function SofiaAlessandroPortfolio() {
         }
       `}} />
 
-      {/* --- COPERTINA (HERO) - IMMAGINE MIGLIORATA (LUXURY MINIMAL) --- */}
+      {/* --- COPERTINA (HERO) --- */}
       <div 
         className={`fixed inset-0 z-50 flex flex-col items-center justify-center p-8 transition-all duration-[1500ms] bg-white ${
           isOpen ? "translate-y-[-100%] opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
       >
-        {/* Nuova immagine di sfondo: Architettura minimalista e pulita */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1510076857177-7470076d4098?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-30"></div>
         
         <div className="text-center relative z-10 border-x border-black/10 px-12 py-20">
@@ -81,7 +93,7 @@ export default function SofiaAlessandroPortfolio() {
           <p className="font-[family-name:var(--font-clean)] text-sm tracking-[0.4em] uppercase mb-12 font-light">20 • 06 • 2027</p>
           <button 
             onClick={() => setIsOpen(true)} 
-            className="group relative px-12 py-4 overflow-hidden border border-black transition-all hover:text-white"
+            className="group relative px-12 py-4 overflow-hidden border border-black transition-all hover:text-white cursor-pointer"
           >
             <div className="absolute inset-0 w-0 bg-black transition-all duration-300 group-hover:w-full"></div>
             <span className="relative z-10 font-[family-name:var(--font-clean)] text-[10px] uppercase tracking-[0.3em] font-bold">Entra</span>
@@ -92,17 +104,24 @@ export default function SofiaAlessandroPortfolio() {
       {/* --- CONTENUTO PRINCIPALE --- */}
       <div className={`transition-all duration-1000 delay-500 ${isOpen ? "opacity-100" : "opacity-0"}`}>
         
-        {/* Intro con Scroll Line - FONT MACCHINA DA SCRIVERE MIGLIORATO (VOGUE STYLE) */}
+        {/* Intro con Scroll Line */}
         <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
           <div className="w-[1px] h-32 bg-black/20 mb-12"></div>
           
           <div className="max-w-3xl mx-auto">
             <h2 className="font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12">L'essenza dell'Amore</h2>
-            {/* Cambiato il font qui in Bodoni Moda per un effetto luxury */}
-            <p className="font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-gray-800 italic">
-              {typedText}
-              <span className="animate-pulse ml-1">|</span>
-            </p>
+            
+            <div className="relative">
+               {/* Ghost Text per stabilità layout */}
+               <p className="font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-transparent select-none">
+                {fullText}
+               </p>
+               {/* Testo animato reale */}
+               <p className="absolute top-0 left-0 w-full h-full font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-gray-800 italic">
+                {typedText}
+                <span className="animate-pulse ml-1 opacity-60">|</span>
+               </p>
+            </div>
           </div>
           
           <div className="w-[1px] h-32 bg-black/20 mt-12"></div>
@@ -153,7 +172,7 @@ export default function SofiaAlessandroPortfolio() {
               />
               <button 
                 onClick={() => fileInputRef.current?.click()}
-                className="px-16 py-6 border border-black text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-black hover:text-white transition-all duration-700 shadow-xl"
+                className="px-16 py-6 border border-black text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-black hover:text-white transition-all duration-700 shadow-xl cursor-pointer"
               >
                 Carica un momento
               </button>
@@ -174,7 +193,7 @@ export default function SofiaAlessandroPortfolio() {
               <div className="text-center py-20 animate-in fade-in zoom-in duration-1000">
                 <h4 className="font-[family-name:var(--font-label)] text-7xl md:text-9xl mb-8">Grazie</h4>
                 <p className="font-[family-name:var(--font-royal)] text-lg tracking-[0.3em] uppercase font-light">La vostra risposta è stata registrata.</p>
-                <button onClick={() => setInviato(false)} className="mt-8 text-[9px] uppercase tracking-widest border-b border-black/20 pb-1">Modifica</button>
+                <button onClick={() => setInviato(false)} className="mt-8 text-[9px] uppercase tracking-widest border-b border-black/20 pb-1 cursor-pointer">Modifica</button>
               </div>
             ) : (
               <div className="max-w-2xl mx-auto">
@@ -217,7 +236,7 @@ export default function SofiaAlessandroPortfolio() {
                   </div>
 
                   <div className="text-center pt-8">
-                    <button type="submit" className="bg-black text-white px-20 py-6 font-[family-name:var(--font-clean)] text-[10px] uppercase tracking-[0.5em] hover:bg-gray-800 transition-all duration-500 shadow-2xl">Invia Conferma</button>
+                    <button type="submit" className="bg-black text-white px-20 py-6 font-[family-name:var(--font-clean)] text-[10px] uppercase tracking-[0.5em] hover:bg-gray-800 transition-all duration-500 shadow-2xl cursor-pointer">Invia Conferma</button>
                   </div>
                 </form>
               </div>

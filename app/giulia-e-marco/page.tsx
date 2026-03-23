@@ -8,26 +8,44 @@ export default function GiuliaMarcoPortfolio() {
   const [typedText, setTypedText] = useState("");
   const fullText = "Siamo felici di invitarvi a celebrare il nostro amore in una cornice rustica e romantica, circondati dalla natura e dalle persone che amiamo.";
 
-  // LOGICA MACCHINA DA SCRIVERE OTTIMIZZATA
+  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" E OTTIMIZZATA ---
   useEffect(() => {
+    // 1. Gestione chiusura immediata
     if (!isOpen) {
       setTypedText(""); // Reset se chiuso
       return;
     }
 
+    // 2. Variabile di controllo anti-conflitto (StrictMode Fix)
+    // Impedisce a due cicli di scrittura di sovrapporsi se React ri-monta il componente.
+    let isCancelled = false;
     let i = 0;
-    const interval = setInterval(() => {
-      // Usiamo il valore funzionale di setTypedText per evitare dipendenze esterne
-      setTypedText(fullText.slice(0, i + 1));
-      i++;
+    setTypedText(""); // Reset immediato prima di iniziare
 
-      if (i >= fullText.length) {
-        clearInterval(interval);
+    // 3. Funzione di scrittura ricorsiva (più stabile di setInterval in React)
+    const type = () => {
+      // Se l'effetto è stato pulito (return), fermiamo l'esecuzione
+      if (isCancelled) return;
+
+      if (i <= fullText.length) {
+        setTypedText(fullText.slice(0, i));
+        i++;
+        // Velocità mantenuta a 50ms per fluidità
+        setTimeout(type, 50);
       }
-    }, 50); // Velocità leggermente aumentata per fluidità
+    };
 
-    return () => clearInterval(interval); // Pulizia fondamentale per evitare lo sfarfallio
-  }, [isOpen]); // Si attiva solo quando cambia lo stato di apertura
+    // 4. Ritardo di Avvio (300ms)
+    // Diamo tempo all'animazione della copertina (duration-1000) di spostarsi
+    // prima di iniziare a scrivere, evitando scatti grafici.
+    const startTimeout = setTimeout(type, 300);
+
+    // 5. Pulizia fondamentale
+    return () => {
+      isCancelled = true; // Segnaliamo al ciclo attivo di fermarsi
+      clearTimeout(startTimeout); // Cancelliamo il timer di avvio se presente
+    };
+  }, [isOpen]); // ⚠️ IMPORTANTE: Solo isOpen qui. typedText NON deve esserci.
 
   const bohoBackgroundStyle = {
     backgroundColor: "#F4EBD0",
@@ -91,11 +109,15 @@ export default function GiuliaMarcoPortfolio() {
 
           {/* Testo animato con "Ghost Text" per mantenere l'altezza ed evitare sbalzi di layout */}
           <div className="relative max-w-lg mx-auto">
+            {/* Testo invisibile di riferimento (Ghost) */}
             <p className="font-[family-name:var(--font-cormorant)] text-transparent leading-relaxed text-2xl md:text-3xl font-light italic select-none pointer-events-none">
               {fullText}
             </p>
+            {/* Testo animato reale sovrapposto */}
             <p className="absolute top-0 left-0 w-full h-full font-[family-name:var(--font-cormorant)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light italic">
               {typedText}
+              {/* Opzionale: cursore animato */}
+              <span className="animate-pulse ml-1 opacity-70">|</span>
             </p>
           </div>
         </section>
