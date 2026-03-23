@@ -8,44 +8,35 @@ export default function GiuliaMarcoPortfolio() {
   const [typedText, setTypedText] = useState("");
   const fullText = "Siamo felici di invitarvi a celebrare il nostro amore in una cornice rustica e romantica, circondati dalla natura e dalle persone che amiamo.";
 
-  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" E OTTIMIZZATA ---
+  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" (STESSA DI CHIARA & MATTEO) ---
   useEffect(() => {
-    // 1. Gestione chiusura immediata
     if (!isOpen) {
-      setTypedText(""); // Reset se chiuso
+      setTypedText(""); 
       return;
     }
 
-    // 2. Variabile di controllo anti-conflitto (StrictMode Fix)
-    // Impedisce a due cicli di scrittura di sovrapporsi se React ri-monta il componente.
     let isCancelled = false;
     let i = 0;
-    setTypedText(""); // Reset immediato prima di iniziare
+    setTypedText(""); // Reset iniziale
 
-    // 3. Funzione di scrittura ricorsiva (più stabile di setInterval in React)
     const type = () => {
-      // Se l'effetto è stato pulito (return), fermiamo l'esecuzione
       if (isCancelled) return;
 
       if (i <= fullText.length) {
         setTypedText(fullText.slice(0, i));
         i++;
-        // Velocità mantenuta a 50ms per fluidità
-        setTimeout(type, 50);
+        setTimeout(type, 50); // Velocità 50ms per fluidità
       }
     };
 
-    // 4. Ritardo di Avvio (300ms)
-    // Diamo tempo all'animazione della copertina (duration-1000) di spostarsi
-    // prima di iniziare a scrivere, evitando scatti grafici.
+    // Ritardo di 300ms: evita conflitti con l'animazione della copertina
     const startTimeout = setTimeout(type, 300);
 
-    // 5. Pulizia fondamentale
     return () => {
-      isCancelled = true; // Segnaliamo al ciclo attivo di fermarsi
-      clearTimeout(startTimeout); // Cancelliamo il timer di avvio se presente
+      isCancelled = true;
+      clearTimeout(startTimeout);
     };
-  }, [isOpen]); // ⚠️ IMPORTANTE: Solo isOpen qui. typedText NON deve esserci.
+  }, [isOpen]); 
 
   const bohoBackgroundStyle = {
     backgroundColor: "#F4EBD0",
@@ -107,16 +98,13 @@ export default function GiuliaMarcoPortfolio() {
              <img src="/boho-divider.png" alt="Decorazione" className="w-full h-auto drop-shadow-sm opacity-90" />
           </div>
 
-          {/* Testo animato con "Ghost Text" per mantenere l'altezza ed evitare sbalzi di layout */}
+          {/* Testo animato con "Ghost Text" per stabilità layout */}
           <div className="relative max-w-lg mx-auto">
-            {/* Testo invisibile di riferimento (Ghost) */}
             <p className="font-[family-name:var(--font-cormorant)] text-transparent leading-relaxed text-2xl md:text-3xl font-light italic select-none pointer-events-none">
               {fullText}
             </p>
-            {/* Testo animato reale sovrapposto */}
             <p className="absolute top-0 left-0 w-full h-full font-[family-name:var(--font-cormorant)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light italic">
               {typedText}
-              {/* Opzionale: cursore animato */}
               <span className="animate-pulse ml-1 opacity-70">|</span>
             </p>
           </div>
@@ -124,14 +112,14 @@ export default function GiuliaMarcoPortfolio() {
 
         <div className="space-y-28 pb-20">
           
-          {/* --- CERIMONIA --- */}
+          {/* Cerimonia */}
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
               <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">La Cerimonia</p>
               <h3 className="text-5xl md:text-7xl font-[family-name:var(--font-heading)] text-[#5c4a40] font-normal tracking-tight">Tenuta La Campana</h3>
               <p className="text-[#8c7a6b] font-[family-name:var(--font-details)] uppercase tracking-widest text-[14px] mt-4 font-bold">Ore 16:30 • Rito Civile all'aperto</p>
               <a 
-                href="https://maps.google.com" 
+                href="https://www.google.it/maps" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="mt-6 inline-block px-8 py-2.5 bg-[#C48061] text-white hover:bg-[#A86B51] transition-colors duration-300 tracking-[0.2em] text-[10px] uppercase cursor-pointer rounded-full shadow-md font-[family-name:var(--font-details)]"
@@ -144,7 +132,7 @@ export default function GiuliaMarcoPortfolio() {
             </div>
           </section>
 
-          {/* --- RICEVIMENTO --- */}
+          {/* Ricevimento */}
           <section className="flex flex-col items-center text-center px-4">
             <div className="flex flex-col items-center">
               <p className="text-[#7A8B76] font-[family-name:var(--font-label)] text-4xl md:text-5xl mb-2">Il Ricevimento</p>

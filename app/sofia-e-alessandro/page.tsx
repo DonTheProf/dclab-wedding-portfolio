@@ -19,16 +19,16 @@ export default function SofiaAlessandroPortfolio() {
 
   const fullText = "Il piacere di invitarvi al nostro giorno più bello. Un'esperienza di eleganza, amore e condivisione.";
 
-  // --- LOGICA MACCHINA DA SCRIVERE "ANTI-SFARFALLIO" ---
+  // --- LOGICA MACCHINA DA SCRIVERE "BLINDATA" ---
   useEffect(() => {
     if (!isOpen) {
-      setTypedText("");
+      setTypedText(""); // Reset se chiuso
       return;
     }
 
-    let isCancelled = false;
+    let isCancelled = false; // Flag per evitare sfarfallio e conflitti
     let i = 0;
-    setTypedText(""); // Reset iniziale
+    setTypedText(""); // Reset immediato
 
     const type = () => {
       if (isCancelled) return;
@@ -36,18 +36,18 @@ export default function SofiaAlessandroPortfolio() {
       if (i <= fullText.length) {
         setTypedText(fullText.slice(0, i));
         i++;
-        setTimeout(type, 50); // Velocità 50ms per un effetto fluido
+        setTimeout(type, 50); // Velocità 50ms per fluidità lussuosa
       }
     };
 
-    // Ritardo di 300ms per attendere che l'animazione della copertina sia a metà
+    // Ritardo di 300ms: aspetta che la copertina abbia iniziato a scorrere
     const startTimeout = setTimeout(type, 300);
 
     return () => {
-      isCancelled = true;
+      isCancelled = true; // Ferma il ciclo se il componente smonta o cambia stato
       clearTimeout(startTimeout);
     };
-  }, [isOpen]);
+  }, [isOpen]); // Eseguito solo all'apertura
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,10 +109,10 @@ export default function SofiaAlessandroPortfolio() {
           <div className="w-[1px] h-32 bg-black/20 mb-12"></div>
           
           <div className="max-w-3xl mx-auto">
-            <h2 className="font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12">L'essenza dell'Amore</h2>
+            <h2 className="font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12 text-gray-400">L'essenza dell'Amore</h2>
             
             <div className="relative">
-               {/* Ghost Text per stabilità layout */}
+               {/* Ghost Text per stabilità layout: mantiene l'altezza corretta della sezione */}
                <p className="font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-transparent select-none">
                 {fullText}
                </p>
@@ -127,8 +127,8 @@ export default function SofiaAlessandroPortfolio() {
           <div className="w-[1px] h-32 bg-black/20 mt-12"></div>
         </section>
 
+        {/* --- DETTAGLI --- */}
         <div className="max-w-5xl mx-auto px-6 space-y-64 pb-40">
-          
           {/* Cerimonia */}
           <section className="grid md:grid-cols-2 gap-16 items-center">
             <div className="order-2 md:order-1 relative group">
@@ -191,7 +191,7 @@ export default function SofiaAlessandroPortfolio() {
           <section className="pt-32 border-t border-black/10">
             {inviato ? (
               <div className="text-center py-20 animate-in fade-in zoom-in duration-1000">
-                <h4 className="font-[family-name:var(--font-label)] text-7xl md:text-9xl mb-8">Grazie</h4>
+                <h4 className="font-[family-name:var(--font-label)] text-7xl md:text-9xl mb-8 text-[#C4A484]">Grazie</h4>
                 <p className="font-[family-name:var(--font-royal)] text-lg tracking-[0.3em] uppercase font-light">La vostra risposta è stata registrata.</p>
                 <button onClick={() => setInviato(false)} className="mt-8 text-[9px] uppercase tracking-widest border-b border-black/20 pb-1 cursor-pointer">Modifica</button>
               </div>
@@ -245,10 +245,11 @@ export default function SofiaAlessandroPortfolio() {
 
         </div>
 
+        {/* Footer */}
         <footer className="py-24 text-center bg-white border-t border-black/5">
           <p className="font-[family-name:var(--font-royal)] text-2xl tracking-[0.4em] mb-4 font-bold">S & A</p>
           <div className="w-8 h-[1px] bg-black/20 mx-auto mb-8"></div>
-          <p className="font-[family-name:var(--font-clean)] text-[9px] uppercase tracking-[0.6em] opacity-40">DC Lab Luxury Studio</p>
+          <p className="font-[family-name:var(--font-clean)] text-[9px] uppercase tracking-[0.6em] opacity-40 italic">DC Lab Luxury Tech Studio</p>
         </footer>
       </div>
     </main>
