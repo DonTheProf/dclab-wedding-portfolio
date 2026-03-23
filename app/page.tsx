@@ -3,7 +3,9 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 export default function WeddingPortfolioHome() {
-  const [isPlaying, setIsPlaying] = useState(false);
+  // 1. Stato iniziale: Attivo (true) e Volume al 50% (0.5)
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const demoList = [
@@ -30,7 +32,28 @@ export default function WeddingPortfolioHome() {
     }
   ];
 
-  // Funzione per gestire il toggle della musica
+  // Sincronizza il volume dell'elemento audio con lo stato React
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  // Tenta di far partire l'audio al caricamento (gestendo il blocco browser)
+  useEffect(() => {
+    const playAudio = () => {
+      if (audioRef.current && isPlaying) {
+        audioRef.current.play().catch(() => {
+          console.log("Autoplay bloccato. In attesa di interazione utente.");
+        });
+      }
+    };
+
+    playAudio();
+    // Aggiunge un listener per far partire l'audio al primo click sulla pagina
+    window.addEventListener("click", playAudio, { once: true });
+  }, []);
+
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -45,7 +68,6 @@ export default function WeddingPortfolioHome() {
   return (
     <main className="min-h-screen bg-[#FAF9F6] text-[#1a1a1a] p-8 md:p-24 relative">
       
-      {/* --- CONFIGURAZIONE FONT LUXURY --- */}
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;600&display=swap');
         
@@ -53,32 +75,64 @@ export default function WeddingPortfolioHome() {
           --font-logo: 'Cinzel', serif;
           --font-tech: 'Montserrat', sans-serif;
         }
+
+        /* Styling custom per lo slider volume */
+        .volume-slider {
+          -webkit-appearance: none;
+          height: 4px;
+          background: #e5e7eb;
+          border-radius: 2px;
+          outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 12px;
+          height: 12px;
+          background: #1a1a1a;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: transform 0.2s;
+        }
+        .volume-slider::-webkit-slider-thumb:hover {
+          transform: scale(1.2);
+        }
       `}} />
 
-      {/* --- ELEMENTO AUDIO (Sostituisci il link con la tua traccia) --- */}
-      <audio ref={audioRef} loop>
-        <source src="canzone2.mp3" type="audio/mpeg" />
-      </audio>
+      <audio ref={audioRef} loop src="/canzone2.mp3" />
 
-      {/* --- TASTO VOLUME FLOATING --- */}
-      <div className="fixed bottom-8 right-8 z-[100]">
+      {/* --- CONTROLLO VOLUME PROFESSIONALE --- */}
+      <div className="fixed bottom-8 right-8 z-[100] flex items-center group bg-white/40 backdrop-blur-xl border border-black/5 p-2 rounded-full shadow-2xl transition-all duration-500 hover:pr-4">
+        
+        {/* Pulsante Icona */}
         <button 
           onClick={toggleMusic}
-          className="flex items-center justify-center w-12 h-12 bg-white/80 backdrop-blur-md border border-black/10 rounded-full shadow-lg hover:scale-110 transition-all duration-300 group"
-          title={isPlaying ? "Disattiva Musica" : "Attiva Musica"}
+          className="flex items-center justify-center w-10 h-10 bg-white border border-black/10 rounded-full shadow-sm hover:scale-105 transition-all duration-300"
         >
-          {isPlaying ? (
-            <span className="text-xl">🔊</span>
+          {isPlaying && volume > 0 ? (
+            <span className="text-sm">🔊</span>
           ) : (
-            <span className="text-xl opacity-40 group-hover:opacity-100">🔇</span>
+            <span className="text-sm opacity-50">🔇</span>
           )}
         </button>
+
+        {/* Slider (appare in hover) */}
+        <div className="w-0 overflow-hidden group-hover:w-24 transition-all duration-500 ease-in-out flex items-center">
+          <input 
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+            className="volume-slider w-full ml-3"
+          />
+        </div>
       </div>
 
       {/* Header Studio */}
       <header className="text-center mb-24 space-y-4">
         <div className="inline-block border-b border-black/20 pb-4">
-          <h1 className="text-6xl md:text-7xl font-[family-name:var(--font-logo)] tracking-[0.3em] uppercase transition-all duration-700">
+          <h1 className="text-6xl md:text-7xl font-[family-name:var(--font-logo)] tracking-[0.3em] uppercase">
             DC LAB
           </h1>
         </div>

@@ -6,9 +6,6 @@ export default function ChiaraMatteoPortfolio() {
   const [isOpen, setIsOpen] = useState(false);
   const [typedText, setTypedText] = useState("");
   const [nome, setNome] = useState("");
-  const [persone, setPersone] = useState("1");
-  const [bambini, setBambini] = useState("0");
-  const [allergie, setAllergie] = useState("");
   const [inviato, setInviato] = useState(false);
   const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -66,13 +63,14 @@ export default function ChiaraMatteoPortfolio() {
         }
       `}} />
 
-      {/* --- COPERTINA (HERO) --- */}
+      {/* --- COPERTINA (HERO) - IMMAGINE SOSTITUITA CON SPOSI AL TRAMONTO --- */}
       <div 
         className={`fixed inset-0 z-50 flex flex-col items-center justify-center p-8 transition-all duration-1000 ease-in-out ${
-          isOpen ? "-translate-x-full opacity-0 pointer-events-none" : "translate-x-0 opacity-100"
+          isOpen ? "-translate-x-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
         style={{
-          backgroundImage: `linear-gradient(rgba(43, 76, 126, 0.4), rgba(43, 76, 126, 0.4)), url('https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1974&auto=format&fit=crop')`,
+          // NUOVA IMMAGINE: Coppia di sposi abbracciati su una spiaggia rocciosa al tramonto
+          backgroundImage: `linear-gradient(rgba(43, 76, 126, 0.4), rgba(43, 76, 126, 0.4)), url('https://images.unsplash.com/photo-1591604466107-dd9ba31d3293?q=80&w=1974&auto=format&fit=crop')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
