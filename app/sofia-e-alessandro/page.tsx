@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function SofiaAlessandroPortfolio() {
   const [isOpen, setIsOpen] = useState(false);
   
-  // STATI PER IL FORM RSVP (Mantenuti per funzionalità futura)
+  // STATI MANTENUTI PER RSVP E FOTO (Logica futura)
   const [nome, setNome] = useState("");
   const [inviato, setInviato] = useState(false);
 
@@ -53,36 +53,35 @@ export default function SofiaAlessandroPortfolio() {
       {/* --- CONTENUTO PRINCIPALE --- */}
       <div className={`transition-all duration-[1500ms] delay-500 ${isOpen ? "opacity-100" : "opacity-0"}`}>
         
-        {/* Intro con Nuova Animazione Fluida */}
+        {/* Intro con Animazione Reveal */}
         <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
-          {/* Linea decorativa superiore */}
-          <div className={`w-[1px] bg-black/20 mb-12 transition-all duration-[2000ms] delay-500 ${isOpen ? "h-32" : "h-0"}`}></div>
+          
+          {/* Linea superiore animata */}
+          <div className={`w-[1px] bg-black/20 mb-12 transition-all duration-[2000ms] delay-700 ${isOpen ? "h-32" : "h-0"}`}></div>
           
           <div className="max-w-3xl mx-auto">
-            <h2 className={`font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12 text-gray-400 transition-all duration-[2000ms] delay-[700ms] ${
-              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            <h2 className={`font-[family-name:var(--font-vogue)] text-5xl md:text-7xl italic mb-12 text-gray-400 transition-all duration-[2000ms] delay-[800ms] ${
+              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}>
               L'essenza dell'Amore
             </h2>
             
-            {/* NUOVA ANIMAZIONE: Dissolvenza e risalita lenta */}
-            <p className={`font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-gray-800 italic transition-all duration-[2500ms] delay-[1000ms] ${
+            <p className={`font-[family-name:var(--font-vogue)] text-2xl md:text-4xl font-light leading-relaxed tracking-tight text-gray-800 italic transition-all duration-[2500ms] delay-[1200ms] ${
               isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}>
               {fullText}
             </p>
-
-            {/* Linea sottile di chiusura */}
-            <div className={`h-[1px] bg-black/10 mx-auto mt-16 transition-all duration-[2000ms] delay-[1500ms] ${isOpen ? "w-48" : "w-0"}`}></div>
           </div>
           
-          {/* Linea decorativa inferiore */}
-          <div className={`w-[1px] bg-black/20 mt-12 transition-all duration-[2000ms] delay-500 ${isOpen ? "h-32" : "h-0"}`}></div>
+          {/* Linea inferiore animata */}
+          <div className={`w-[1px] bg-black/20 mt-12 transition-all duration-[2000ms] delay-700 ${isOpen ? "h-32" : "h-0"}`}></div>
+          
         </section>
 
-        {/* --- Footer (Esempio per chiudere la struttura) --- */}
+        {/* Footer */}
         <footer className="py-24 text-center bg-white border-t border-black/5">
           <p className="font-[family-name:var(--font-royal)] text-2xl tracking-[0.4em] mb-4 font-bold">S & A</p>
+          <div className="w-8 h-[1px] bg-black/20 mx-auto mb-8"></div>
           <p className="font-[family-name:var(--font-clean)] text-[9px] uppercase tracking-[0.6em] opacity-40 italic">DC Lab Luxury Tech Studio</p>
         </footer>
       </div>
