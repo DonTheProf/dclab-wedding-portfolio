@@ -5,6 +5,8 @@ import { useState } from "react";
 export default function RSVP() {
   const [nome, setNome] = useState("");
   const [presenza, setPresenza] = useState("si");
+  const [adulti, setAdulti] = useState("1");
+  const [bambini, setBambini] = useState("0");
   const [note, setNote] = useState("");
   const [inviato, setInviato] = useState(false);
 
@@ -24,7 +26,9 @@ export default function RSVP() {
           Grazie {nome.split(' ')[0]}!
         </h3>
         <p className="font-[family-name:var(--font-cormorant)] text-[#5c4a40] text-2xl italic">
-          La tua conferma è stata registrata nel nostro cuore.
+          {presenza === "si" 
+            ? `Non vediamo l'ora di avervi con noi!` 
+            : "Ci dispiace che non potrai esserci, sarai comunque nei nostri pensieri."}
         </p>
         <button 
           onClick={() => setInviato(false)}
@@ -42,7 +46,6 @@ export default function RSVP() {
         RSVP
       </p>
       
-      {/* TITOLO CON WATER BRUSH (var(--font-label)) */}
       <h3 className="text-6xl md:text-8xl font-[family-name:var(--font-label)] text-[#5c4a40] font-normal tracking-tight mb-8">
         Conferma la tua presenza
       </h3>
@@ -52,6 +55,7 @@ export default function RSVP() {
       </p>
       
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-10 font-[family-name:var(--font-details)]">
+        {/* NOME E COGNOME */}
         <div className="text-left group">
           <label className="block text-[10px] uppercase tracking-widest text-[#8c7a6b] mb-2 ml-2 font-bold">
             Nome e Cognome
@@ -66,6 +70,7 @@ export default function RSVP() {
           />
         </div>
 
+        {/* RADIO BUTTONS PRESENZA */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-8 py-4">
           <label className="flex items-center cursor-pointer group">
             <input 
@@ -93,6 +98,37 @@ export default function RSVP() {
           </label>
         </div>
 
+        {/* CAMPI NUMERICI (Mostrati solo se presenza === "si") */}
+        {presenza === "si" && (
+          <div className="grid grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+            <div className="text-left">
+              <label className="block text-[10px] uppercase tracking-widest text-[#8c7a6b] mb-2 ml-2 font-bold">
+                Numero Adulti
+              </label>
+              <input 
+                type="number" 
+                min="1"
+                value={adulti}
+                onChange={(e) => setAdulti(e.target.value)}
+                className="w-full bg-white/30 border border-[#C48061]/20 p-4 focus:outline-none focus:border-[#C48061] transition-colors rounded-2xl text-[#5c4a40]"
+              />
+            </div>
+            <div className="text-left">
+              <label className="block text-[10px] uppercase tracking-widest text-[#8c7a6b] mb-2 ml-2 font-bold">
+                Numero Bambini
+              </label>
+              <input 
+                type="number" 
+                min="0"
+                value={bambini}
+                onChange={(e) => setBambini(e.target.value)}
+                className="w-full bg-white/30 border border-[#C48061]/20 p-4 focus:outline-none focus:border-[#C48061] transition-colors rounded-2xl text-[#5c4a40]"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* NOTE / ALLERGIE */}
         <div className="text-left">
           <label className="block text-[10px] uppercase tracking-widest text-[#8c7a6b] mb-2 ml-2 font-bold">
             Allergie o preferenze alimentari
@@ -106,6 +142,7 @@ export default function RSVP() {
           />
         </div>
 
+        {/* TASTO INVIO */}
         <button 
           type="submit"
           className="w-full py-5 bg-[#C48061] text-white uppercase tracking-[0.3em] text-[11px] font-bold rounded-full hover:bg-[#A86B51] transition-all shadow-xl active:scale-95 shadow-[#C48061]/20"

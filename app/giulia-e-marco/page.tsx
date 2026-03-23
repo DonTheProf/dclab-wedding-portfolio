@@ -69,15 +69,14 @@ export default function GiuliaMarcoPortfolio() {
           </div>
 
           <div className="max-w-2xl mx-auto overflow-hidden">
-            {/* NUOVA ANIMAZIONE: Dissolvenza e risalita lenta */}
+            {/* AGGIORNATO: Font Belleza (var(--font-heading)) e rimosso italic per coerenza con Belleza */}
             <p 
-              className={`font-[family-name:var(--font-cormorant)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light italic transition-all duration-[2000ms] delay-[800ms] ease-out ${
+              className={`font-[family-name:var(--font-heading)] text-[#5c4a40] leading-relaxed text-2xl md:text-3xl font-light uppercase tracking-wide transition-all duration-[2000ms] delay-[800ms] ease-out ${
                 isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
             >
               {fullText}
             </p>
-            {/* Sottolineatura decorativa che appare dopo il testo */}
             <div className={`h-[1px] bg-[#C48061]/30 mx-auto mt-8 transition-all duration-[2000ms] delay-[1500ms] ${isOpen ? "w-24" : "w-0"}`}></div>
           </div>
         </section>
