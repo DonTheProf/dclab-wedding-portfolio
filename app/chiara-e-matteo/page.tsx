@@ -63,14 +63,14 @@ export default function ChiaraMatteoPortfolio() {
         }
       `}} />
 
-      {/* --- COPERTINA (HERO) - IMMAGINE SOSTITUITA CON SPOSI AL TRAMONTO --- */}
+      {/* --- COPERTINA (HERO) - IMMAGINE DI POSITANO RIPRISTINATA --- */}
       <div 
         className={`fixed inset-0 z-50 flex flex-col items-center justify-center p-8 transition-all duration-1000 ease-in-out ${
           isOpen ? "-translate-x-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
         style={{
-          // NUOVA IMMAGINE: Coppia di sposi abbracciati su una spiaggia rocciosa al tramonto
-          backgroundImage: `linear-gradient(rgba(43, 76, 126, 0.4), rgba(43, 76, 126, 0.4)), url('https://images.unsplash.com/photo-1591604466107-dd9ba31d3293?q=80&w=1974&auto=format&fit=crop')`,
+          // IMMAGINE RIPRISTINATA: Veduta panoramica di Positano
+          backgroundImage: `linear-gradient(rgba(43, 76, 126, 0.5), rgba(43, 76, 126, 0.5)), url('https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2000&auto=format&fit=crop')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -93,7 +93,7 @@ export default function ChiaraMatteoPortfolio() {
         
         {/* Intro - FONT CAMBIATO IN BELLEZA */}
         <section className="py-24 px-6 text-center max-w-3xl mx-auto space-y-8 min-h-[40vh] flex flex-col justify-center items-center">
-          <img src="https://cdn-icons-png.flaticon.com/512/290/290452.png" className="w-20 mx-auto opacity-80" alt="Lemon" />
+          <img src="https://cdn-icons-png.flaticon.com/512/2917/2917242.png" className="w-20 mx-auto opacity-80" alt="Sun" />
           <div className="relative">
              <p className="font-[family-name:var(--font-belleza)] text-3xl md:text-4xl leading-relaxed text-transparent select-none">
                 {fullText}
